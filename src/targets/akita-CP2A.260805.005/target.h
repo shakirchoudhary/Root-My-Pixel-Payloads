@@ -127,6 +127,9 @@
 #define MAIN_TCP_PAYLOAD_DEFAULT 1
 // Stack frames identical to tegu (same binary). shift=1 (tegu-proven).
 #define KSNITCH_COLLISIONS 8
+// #ifndef PSELECT_TIMEOUT_SEC
+// #define PSELECT_TIMEOUT_SEC 10
+// #endif
 #define PSELECT_WAITER_WORD_SHIFT 1
 
 #define SLIDE_NFULNL_LOGGER_IMAGE (KIMAGE_TEXT_BASE + SLIDE_NFULNL_LOGGER_OFF)

